@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.Arrays;
 
 @Service
 public class JwtTokenFilter extends GenericFilterBean {
@@ -24,20 +24,24 @@ public class JwtTokenFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        try{
-            String token = ((HttpServletRequest) request).getHeader("Authorization");
-            if (token != null && jwtTokenProvider.validateToken(token)) {
-                // 토큰에서 사용자 이름을 추출
-                String username = jwtTokenProvider.getUsername(token);
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        String header = httpRequest.getHeader("Authorization");
 
-                // 인증 정보 설정
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        username, null, Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+        try {
+            if (header != null && header.startsWith("Bearer ")) {
+                String token = header.substring(7); // "Bearer " 다음부터 토큰 시작
+                if (jwtTokenProvider.validateToken(token)) {
+                    String username = jwtTokenProvider.getUsername(token);
 
+                    // 동적 권한 할당을 위해 수정 가능
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                            username, null, Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
             }
-        }catch(Exception ex){
-        logger.error("Could not set user authentication in security context",ex);
+        } catch(Exception ex) {
+            logger.error("Could not set user authentication in security context", ex);
+            throw new ServletException("Security context authentication setting failed.", ex);
         }
         chain.doFilter(request, response);
     }

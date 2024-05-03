@@ -1,9 +1,12 @@
 package gs.chippo.travel.service;
 
+import gs.chippo.travel.dto.BoardDTO;
 import gs.chippo.travel.entity.BoardEntity;
+import gs.chippo.travel.entity.UserEntity;
 import gs.chippo.travel.repository.BoardRepository;
 import gs.chippo.travel.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +23,14 @@ public class BoardService {
     private UserRepository userRepository;
 
 
-    public List<BoardEntity> create(final String userId, final BoardEntity entity){
-        BoardEntity tempEntity = entity.builder().user(userRepository.getById(userId)).build();
-        validate(entity);
-        boardRepository.save(entity);
+    public List<BoardEntity> create(final String userId, final BoardDTO entity){
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
+
+        BoardEntity tempEntity = BoardDTO.toEntity(entity);
+        tempEntity.setUser(user);
+        validate(tempEntity);
+        boardRepository.save(tempEntity);
         return boardRepository.findByUserId(userId);
     }
 

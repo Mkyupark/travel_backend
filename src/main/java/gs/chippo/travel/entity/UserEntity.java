@@ -1,15 +1,13 @@
 package gs.chippo.travel.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@ToString(exclude = "boards")
 @Data
 @Entity
 @Builder

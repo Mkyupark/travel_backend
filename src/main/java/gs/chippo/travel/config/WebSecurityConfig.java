@@ -21,6 +21,7 @@ public class WebSecurityConfig {
                 .csrf(csrf -> csrf.disable())// CSRF 보호 기능 비활성화
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/","/auth/**").permitAll()  // 공개 API 경로는 인증을 요구하지 않음
+                        .requestMatchers("/api/board/**").hasAuthority("ROLE_USER")
                         .requestMatchers("/api/**").authenticated()  // 인증된 사용자만 접근 가능
                         .anyRequest().authenticated()  // 그 외의 모든 요청은 인증이 필요
                 )

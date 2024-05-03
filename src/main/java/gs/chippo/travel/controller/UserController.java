@@ -6,6 +6,7 @@ import gs.chippo.travel.dto.ResponseDTO;
 import gs.chippo.travel.dto.UserDTO;
 import gs.chippo.travel.entity.UserEntity;
 import gs.chippo.travel.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
+@Slf4j
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/auth")
@@ -55,6 +57,7 @@ public class UserController {
 
         if(user !=null){
             final String token = tokenProvider.create(user);
+            log.info("token : {} ", token);
             final UserDTO responseUserDTO = UserDTO.builder()
                     .email(user.getEmail())
                     .id(user.getId())
