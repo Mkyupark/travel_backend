@@ -26,6 +26,7 @@ public class BoardEntity {
 
     private boolean fix;
 
+    // 외래키 설정
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
