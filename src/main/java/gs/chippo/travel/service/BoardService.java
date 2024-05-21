@@ -26,7 +26,6 @@ public class BoardService {
     public List<BoardEntity> create(final String userId, final BoardDTO entity){
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
-
         BoardEntity tempEntity = BoardDTO.toEntity(entity);
         tempEntity.setUser(user);
         validate(tempEntity);

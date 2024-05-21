@@ -31,7 +31,7 @@ public class JwtTokenFilter extends GenericFilterBean {
             if (header != null && header.startsWith("Bearer ")) {
                 String token = header.substring(7); // "Bearer " 다음부터 토큰 시작
                 if (jwtTokenProvider.validateToken(token)) {
-                    String username = jwtTokenProvider.getUsername(token);
+                    String username = jwtTokenProvider.getUserId(token);
 
                     // 동적 권한 할당을 위해 수정 가능
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(

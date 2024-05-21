@@ -18,11 +18,9 @@ public class BoardEntity {
     @GenericGenerator(name="system-uuid",strategy="uuid")
     private String id;
 
-
     private String title;
 
     private String content;
-
 
     private boolean fix;
 

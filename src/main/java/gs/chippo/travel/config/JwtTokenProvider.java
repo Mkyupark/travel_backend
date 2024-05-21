@@ -49,7 +49,8 @@ public class JwtTokenProvider {
         }
     }
 
-    public String getUsername(String token) {
+    // 토큰으로 userId 찾음
+    public String getUserId(String token) {
         try {
             SignedJWT signedJWT = SignedJWT.parse(token);
             return signedJWT.getJWTClaimsSet().getSubject();

@@ -5,7 +5,7 @@ import gs.chippo.travel.dto.BoardDTO;
 import gs.chippo.travel.dto.ResponseDTO;
 import gs.chippo.travel.entity.BoardEntity;
 import gs.chippo.travel.service.BoardService;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Slf4j
+@Log4j2
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/board")

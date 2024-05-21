@@ -29,25 +29,18 @@ public class UserController {
 
     @PostMapping("signup")
     public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO){
-        try{
-            UserEntity user = UserEntity.builder()
-                    .email(userDTO.getEmail())
-                    .username(userDTO.getUsername())
-                    .password(passwordEncoder.encode(userDTO.getPassword()))
-                    .build();
-            UserEntity registeredUser = userService.create(user);
-            UserDTO responseUserDTO = userDTO.builder()
-                    .email(registeredUser.getEmail())
-                    .id(registeredUser.getId())
-                    .username(registeredUser.getUsername())
-                    .build();
-            return ResponseEntity.ok().body(responseUserDTO);
-        }catch(Exception e){
-            ResponseDTO responseDTO =
-                    ResponseDTO.builder().error(e.getMessage()).build();
-            return ResponseEntity.badRequest().body(responseDTO);
-        }
-
+        UserEntity user = UserEntity.builder()
+                .email(userDTO.getEmail())
+                .username(userDTO.getUsername())
+                .password(passwordEncoder.encode(userDTO.getPassword()))
+                .build();
+        UserEntity registeredUser = userService.create(user);
+        UserDTO responseUserDTO = userDTO.builder()
+                .email(registeredUser.getEmail())
+                .id(registeredUser.getId())
+                .username(registeredUser.getUsername())
+                .build();
+        return ResponseEntity.ok().body(responseUserDTO);
     }
 
     @PostMapping("/signin")
@@ -72,4 +65,18 @@ public class UserController {
         }
     }
 
+    @GetMapping()
+    public ResponseEntity<?> getUserId(@RequestParam("id") String token) {
+        try{
+            String userName = tokenProvider.getUserId(token);
+            log.info("token : {} ", token);
+            log.info("userName : {} ", userName);
+            return ResponseEntity.ok().body(userName);
+        }catch(Exception error) {
+            ResponseDTO responseDTO = ResponseDTO.builder()
+                    .error("토큰으로 id 찾지 못함")
+                    .build();
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+    }
 }
