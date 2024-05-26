@@ -5,12 +5,10 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import gs.chippo.travel.entity.UserEntity;
-import org.springframework.context.annotation.Bean;
+import gs.chippo.travel.user.UserEntity;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
-import java.time.Instant;
 import java.util.Date;
 
 @Component

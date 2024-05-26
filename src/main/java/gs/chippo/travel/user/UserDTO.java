@@ -1,4 +1,4 @@
-package gs.chippo.travel.dto;
+package gs.chippo.travel.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

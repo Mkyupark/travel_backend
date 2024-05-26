@@ -1,8 +1,7 @@
-package gs.chippo.travel.dto;
+package gs.chippo.travel.board;
 
 
-import gs.chippo.travel.entity.BoardEntity;
-import gs.chippo.travel.entity.UserEntity;
+import gs.chippo.travel.user.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

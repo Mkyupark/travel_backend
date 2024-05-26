@@ -1,12 +1,11 @@
-package gs.chippo.travel.service;
+package gs.chippo.travel.board;
 
-import gs.chippo.travel.dto.BoardDTO;
-import gs.chippo.travel.entity.BoardEntity;
-import gs.chippo.travel.entity.UserEntity;
-import gs.chippo.travel.repository.BoardRepository;
-import gs.chippo.travel.repository.UserRepository;
+import gs.chippo.travel.board.BoardDTO;
+import gs.chippo.travel.board.BoardEntity;
+import gs.chippo.travel.user.UserEntity;
+import gs.chippo.travel.board.BoardRepository;
+import gs.chippo.travel.user.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

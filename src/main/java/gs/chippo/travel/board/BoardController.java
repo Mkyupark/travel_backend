@@ -1,10 +1,7 @@
-package gs.chippo.travel.controller;
+package gs.chippo.travel.board;
 
 
-import gs.chippo.travel.dto.BoardDTO;
 import gs.chippo.travel.dto.ResponseDTO;
-import gs.chippo.travel.entity.BoardEntity;
-import gs.chippo.travel.service.BoardService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

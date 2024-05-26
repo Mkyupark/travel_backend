@@ -1,6 +1,5 @@
-package gs.chippo.travel.repository;
+package gs.chippo.travel.user;
 
-import gs.chippo.travel.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

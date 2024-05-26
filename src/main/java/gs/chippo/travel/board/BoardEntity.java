@@ -1,6 +1,7 @@
-package gs.chippo.travel.entity;
+package gs.chippo.travel.board;
 
 
+import gs.chippo.travel.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;

@@ -1,11 +1,8 @@
-package gs.chippo.travel.controller;
+package gs.chippo.travel.user;
 
 
 import gs.chippo.travel.config.JwtTokenProvider;
 import gs.chippo.travel.dto.ResponseDTO;
-import gs.chippo.travel.dto.UserDTO;
-import gs.chippo.travel.entity.UserEntity;
-import gs.chippo.travel.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

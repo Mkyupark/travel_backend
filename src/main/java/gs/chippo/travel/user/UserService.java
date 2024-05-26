@@ -1,9 +1,7 @@
-package gs.chippo.travel.service;
+package gs.chippo.travel.user;
 
-import gs.chippo.travel.entity.UserEntity;
 import gs.chippo.travel.exception.ErrorCode;
 import gs.chippo.travel.exception.RestApiException;
-import gs.chippo.travel.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

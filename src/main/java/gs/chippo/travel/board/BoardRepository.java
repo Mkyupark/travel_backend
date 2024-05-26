@@ -1,6 +1,5 @@
-package gs.chippo.travel.repository;
+package gs.chippo.travel.board;
 
-import gs.chippo.travel.entity.BoardEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
