@@ -28,7 +28,7 @@ public class SubwayService {
     private final String TYPE = "json";
     private final String SERVICE_NAME = "tpssSubwayPassenger";
     private final int START_INDEX = 1;
-    private final int END_INDEX = 5;
+    private final int END_INDEX = 100;
     @Autowired
     private RestTemplateConfig restTemplateConfig;
 
@@ -79,7 +79,14 @@ public class SubwayService {
 
             for (JsonNode row : rowNode) {
                 log.info(row.toString());
-                SubwayDTO subwayPassenger = objectMapper.readValue(row.toString(), SubwayDTO.class);
+                String crtrDt = row.path("CRTR_DT").asText();
+                String admongId = row.path("ADMDONG_ID").asText();
+                String sbwyPsgrCnt = row.path("SBWY_PSGR_CNT").asText();
+                SubwayDTO subwayPassenger = new SubwayDTO();
+                subwayPassenger.setCRTR_DT(crtrDt);
+                subwayPassenger.setADMDONG_ID(admongId);
+                subwayPassenger.setSBWY_PSGR_CNT(sbwyPsgrCnt);
+
                 log.info(subwayPassenger);
                 subwayList.add(subwayPassenger);
             }
