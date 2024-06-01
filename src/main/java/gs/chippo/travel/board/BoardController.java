@@ -50,10 +50,4 @@ public class BoardController {
 
     }
 
-
-//    @GetMapping(value = "/subscribe", produces = "text/event-stream")
-//    public SseEmitter subscribe(@AuthenticationPrincipal String userId,
-//                                @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
-//        return boardService.subscribe(userId, lastEventId);
-//    }
 }
