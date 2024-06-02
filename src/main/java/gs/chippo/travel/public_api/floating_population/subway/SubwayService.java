@@ -2,6 +2,8 @@ package gs.chippo.travel.public_api.floating_population.subway;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import gs.chippo.travel.config.RestTemplateConfig;
+import gs.chippo.travel.public_api.area_code.AreaCodeEntity;
+import gs.chippo.travel.public_api.area_code.AreaCodeRepository;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONObject;
 import org.json.XML;
@@ -28,9 +30,13 @@ public class SubwayService {
     private final String TYPE = "json";
     private final String SERVICE_NAME = "tpssSubwayPassenger";
     private final int START_INDEX = 1;
-    private final int END_INDEX = 100;
+    private final int END_INDEX = 1000;
     @Autowired
     private RestTemplateConfig restTemplateConfig;
+
+
+    @Autowired
+    private AreaCodeRepository areaCodeRepository;
 
     public List<SubwayDTO> getSubwayServiceObject() {
         // 결과를 저장할 StringBuffer 초기화
@@ -101,5 +107,57 @@ public class SubwayService {
         }
     }
 
+    public SubwayAreaDTO JoinSubwayAndArea (String regionCode){
+        StringBuffer result = new StringBuffer();
+        try {
+            String API_URL = String.format("%s/%s/%s/%s/%d/%d", HOST_URL, API_KEY, TYPE, SERVICE_NAME, START_INDEX, END_INDEX);
+            URL url = new URL(API_URL);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.connect();
+
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream, StandardCharsets.UTF_8));
+            String returnLine = null;
+            while ((returnLine = bufferedReader.readLine()) != null) {
+                result.append(returnLine);
+            }
+            log.info("API Response: " + result.toString());
+
+            // JSON 데이터를 SubwayDTO로 변환
+            JsonNode rootNode = objectMapper.readTree(result.toString());
+            JsonNode rowNode = rootNode.path("tpssSubwayPassenger").path("row");
+            log.info("rowNode : " + rowNode);
+
+
+            int passengerNum = 0;
+            for (JsonNode row : rowNode) {
+                String admongId = row.path("ADMDONG_ID").asText();
+                if(admongId.equals(regionCode)) {
+                    String sbwyPsgrCntStr = row.path("SBWY_PSGR_CNT").asText();
+                    int sbwyPsgrCnt = (int) Double.parseDouble(sbwyPsgrCntStr);
+                    passengerNum += sbwyPsgrCnt;
+                }
+            }
+            SubwayAreaDTO subwayPassenger = new SubwayAreaDTO();
+            List<AreaCodeEntity> areaEntity = areaCodeRepository.findByRegionCode(regionCode);
+            AreaCodeEntity area = areaEntity.get(0);
+
+            subwayPassenger.setSBWY_PSGR_CNT(passengerNum);
+            subwayPassenger.setCity(area.getCity());
+            subwayPassenger.setDistrict(area.getDistrictCode());
+            subwayPassenger.setRegion(area.getRegion());
+            subwayPassenger.setEnglishName(area.getEnglishName());
+            subwayPassenger.setRegionCode(area.getRegionCode());
+            log.info("Converted DTO: " + subwayPassenger);
+            // API 응답 데이터를 XML에서 JSONObject으로 변환
+            return subwayPassenger;
+
+        } catch (Exception e) {
+            SubwayAreaDTO subwayDTO = new SubwayAreaDTO();
+            log.error("Api 호출 오류", e);
+            return subwayDTO; // 빈 JSON 객체 반환
+        }
+
+    }
 
 }

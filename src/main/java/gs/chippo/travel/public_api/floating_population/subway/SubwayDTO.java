@@ -18,5 +18,6 @@ public class SubwayDTO {
         private String CRTR_DT; // 기준_날짜
         private String ADMDONG_ID; // 행정동_ID
         private String SBWY_PSGR_CNT; // 지하철 총 승객수
-
 }
+
+

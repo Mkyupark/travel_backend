@@ -49,8 +49,7 @@ public class ExcelReader implements CommandLineRunner {
         for (Row row : sheet) {
             Cell cityCell = row.getCell(2);
             if (cityCell != null && CellType.STRING.equals(cityCell.getCellType()) && "서울특별시".equals(cityCell.getStringCellValue()) && row.getCell(4) != null) {
-                List<AreaCodeEntity> areaCodeEntity = areaCodeRepository.findByRegionCode(row.getCell(5).toString());
-
+                List<AreaCodeEntity> areaCodeEntity = areaCodeRepository.findByRegionCode(getCellValueAsString(row.getCell(5)));
                 if(areaCodeEntity.isEmpty()){
                     AreaCodeEntity area = AreaCodeEntity.builder()
                             .city(getCellValueAsString(row.getCell(2)))

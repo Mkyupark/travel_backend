@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface AreaCodeRepository extends JpaRepository<AreaCodeEntity, Long> {
     List<AreaCodeEntity> findByRegionCode(String regionCode);
+
 }
